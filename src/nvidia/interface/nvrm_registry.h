@@ -1019,7 +1019,12 @@
 #define NV_REG_STR_RM_FORCE_P2P_TYPE_NVLINK                    (0x00000002)
 #define NV_REG_STR_RM_FORCE_P2P_TYPE_C2C                       (0x00000003)
 #define NV_REG_STR_RM_FORCE_P2P_TYPE_MAX                       NV_REG_STR_RM_FORCE_P2P_TYPE_C2C
-
+#ifndef NV_REG_STR_RM_FORCE_P2P_TYPE_BAR1P2P
+#define NV_REG_STR_RM_FORCE_P2P_TYPE_BAR1P2P                  (0x00000011)
+#endif
+#ifndef NV_REG_STR_RM_FORCE_P2P_TYPE_BAR1     /* new alias name in R575++ */
+#define NV_REG_STR_RM_FORCE_P2P_TYPE_BAR1                     NV_REG_STR_RM_FORCE_P2P_TYPE_BAR1P2P
+#endif
 //
 // Type: DWORD
 // Allows the choice of which PCIe P2P method to use
@@ -1344,6 +1349,11 @@
 // Default 0
 #define NV_REG_STR_RM_INTR_LOCKING_MODE_DEFAULT               (0x00000000)
 #define NV_REG_STR_RM_INTR_LOCKING_MODE_INTR_MASK             (0x00000001)
+
+#define NV_REG_INTERNAL_PANEL_DISCONNECTED         "RMInternalPanelDisconnected"
+#define NV_REG_INTERNAL_PANEL_DISCONNECTED_DISABLE  0x00000000
+#define NV_REG_INTERNAL_PANEL_DISCONNECTED_ENABLE   0x00000001
+#define NV_REG_INTERNAL_PANEL_DISCONNECTED_DEFAULT  RM_REG_INTERNAL_PANEL_DISCONNECTED_DISABLE
 
 #define NV_REG_STR_RM_PER_INTR_DPC_QUEUING        "RMDisablePerIntrDPCQueueing"
 // Type DWORD
@@ -2666,6 +2676,19 @@
 #define NV_REG_STR_RM_RUSD_POLLING_INTERVAL_TESLA            100
 #define NV_REG_STR_RM_RUSD_POLLING_INTERVAL_MIN              100
 #define NV_REG_STR_RM_RUSD_POLLING_INTERVAL_MAX              1000
+
+//
+// Type: DWORD
+// This regkey enables some path to reuse the initially allocated continguous memory
+// instead of freeing it dynamically which causes memory fragmentation and
+// under low available memory configuration the allocation could fail and leads to BSOD
+// Enable the key to reuse the initially allocated mem withoug free and reallocate
+//   - Default for Blackwell and up
+// Disable the key to free and allocate dynamically
+//
+#define NV_REG_STR_RM_INIT_MEM_REUSE                           "RmInitMemReuse"
+#define NV_REG_STR_RM_INIT_MEM_REUSE_ENABLE                     0x00000001
+#define NV_REG_STR_RM_INIT_MEM_REUSE_DISABLE                    0x00000000
 
 //
 // Type DWORD (Boolean)
