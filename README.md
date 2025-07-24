@@ -1,3 +1,18 @@
+# Install driver without kernel module
+wget -c https://download.nvidia.com/XFree86/Linux-x86_64/575.57.08/NVIDIA-Linux-x86_64-575.57.08.run
+chmod +x NVIDIA-Linux-x86_64-575.57.08.run
+./NVIDIA-Linux-x86_64-575.57.08.run --no-kernel-modules -a -s
+## Install P2P kernel module
+if [ -d open-gpu-kernel-modules ]; then
+  rm -rf open-gpu-kernel-modules
+fi
+git clone https://github.com/ec-jt/open-gpu-kernel-modules.git
+cd open-gpu-kernel-modules
+git switch 5090-cu129-p2p
+./install.sh
+nvidia-smi topo -p2p r
+nvidia-smi topo -m      
+
 # NVIDIA Linux Open GPU Kernel Module Source
 
 This is the source release of the NVIDIA Linux open GPU kernel modules,
